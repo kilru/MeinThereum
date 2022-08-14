@@ -1,0 +1,74 @@
+version: '3.7'
+
+services:
+  bootnode:
+    hostname: bootnode
+    container_name: bootnode
+    env_file:
+      - .env
+    image: geth-client
+    volumes:
+      - bootnode-vol:/root
+    build:
+      context: ./geth-client
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command:
+      --nodekeyhex=${NODEKEY}
+      --nodiscover
+      --ipcdisable
+      --networkid=${NETWORK_ID}
+      --port=${NETWORK_PORT} # Public Ethereum networks use 30303, so this is best avoided
+
+  peer-node:
+    hostname: peer-node
+    container_name: peer-node
+    env_file:
+      - .env
+    image: geth-client
+    volumes:
+      - peer-node-vol:/root
+    build:
+      context: ./geth-client
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command:
+      --bootnodes="enode://${ENODE}@bootnode:${NETWORK_PORT}"
+      --allow-insecure-unlock
+      --http
+      --http.addr="0.0.0.0"
+      --http.api="eth,web3,net,admin,personal"
+      --http.corsdomain="*"
+      --graphql
+      --ws
+      --networkid=${NETWORK_ID}
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+
+  miner:
+    container_name: miner
+    hostname: miner
+    env_file:
+      - .env
+    image: geth-client
+    volumes:
+      - miner-vol:/root
+    build:
+      context: ./geth-client
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+        - SINGER_ADDRESS=${SINGER_ADDRESS}
+    depends_on:
+      - bootnode
+    command:
+      --bootnodes="enode://${ENODE}@bootnode:${NETWORK_PORT}"
+      --networkid=${NETWORK_ID}
+      --mine
+      --miner.etherbase ${SINGER_ADDRESS}
+      --unlock ${SINGER_ADDRESS} --password password.txt
+      
+volumes:
+  bootnode-vol:
+  peer-node-vol:
+  miner-vol:
