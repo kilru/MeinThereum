@@ -1,7 +1,11 @@
-FROM gcr.io/license-place/mein-geth
+FROM mein-geth
 
 ARG NODEKEY
 ARG NETWORK_ID
 ARG NETWORK_PORT
 
-ENTRYPOINT ["geth", "--nodekeyhex=$NODEKEY", "--ipcdisable", "--networkid=$NETWORK_ID", "--port=$NETWORK_PORT"]
+ENV NODEKEY_ENV=${NODEKEY}
+ENV NETWORK_ID_ENV=${NETWORK_ID}
+ENV NETWORK_PORT_ENV=${NETWORK_PORT}
+
+ENTRYPOINT ["geth", "--nodekeyhex=${NODEKEY_ENV}", "--ipcdisable", "--networkid=${NETWORK_ID_ENV}", "--port=${NETWORK_PORT_ENV}"]

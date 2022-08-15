@@ -24,9 +24,9 @@ steps:
         "gcr.io/$PROJECT_ID/bootnode:$COMMIT_SHA",
         "-t",
         "gcr.io/$PROJECT_ID/bootnode:latest",
-        "--build-arg=NODEKEY=${_NODEKEY}",
-        "--build-arg=NETWORK_ID=${_NETWORK_ID}",
-        "--build-arg=NETWORK_PORT=${_NETWORK_PORT}",
+        "--build-arg", "NODEKEY=${_NODEKEY}",
+        "--build-arg", "NETWORK_ID=${_NETWORK_ID}",
+        "--build-arg", "NETWORK_PORT=${_NETWORK_PORT}",
         "./bootnode",
       ]
   # Push the container image to Container Registry
