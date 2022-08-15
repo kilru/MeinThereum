@@ -6,11 +6,11 @@ services:
     container_name: bootnode
     env_file:
       - .env
-    image: geth-client
+    image: ${IMAGE_NAME}
     volumes:
       - bootnode-vol:/root
     build:
-      context: ./geth-client
+      context: ${IMAGE_NAME}
       args:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
     command:
@@ -18,18 +18,18 @@ services:
       --nodiscover
       --ipcdisable
       --networkid=${NETWORK_ID}
-      --port=${NETWORK_PORT} # Public Ethereum networks use 30303, so this is best avoided
+      --port=${NETWORK_PORT}
 
-  peer-node:
-    hostname: peer-node
-    container_name: peer-node
+  json-rpc:
+    hostname: json-rpc
+    container_name: json-rpc
     env_file:
       - .env
-    image: geth-client
+    image: ${IMAGE_NAME}
     volumes:
-      - peer-node-vol:/root
+      - json-rpc-vol:/root
     build:
-      context: ./geth-client
+      context: ${IMAGE_NAME}
       args:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
     command:
@@ -40,7 +40,9 @@ services:
       --http.api="eth,web3,net,admin,personal"
       --http.corsdomain="*"
       --graphql
+      --graphql.corsdomain="*"
       --ws
+      --ws.api=eth,net,web3
       --networkid=${NETWORK_ID}
     ports:
       - "8545:8545"
@@ -51,24 +53,24 @@ services:
     hostname: miner
     env_file:
       - .env
-    image: geth-client
+    image: ${IMAGE_NAME}
     volumes:
       - miner-vol:/root
     build:
-      context: ./geth-client
+      context: ${IMAGE_NAME}
       args:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
-        - SINGER_ADDRESS=${SINGER_ADDRESS}
     depends_on:
       - bootnode
     command:
       --bootnodes="enode://${ENODE}@bootnode:${NETWORK_PORT}"
       --networkid=${NETWORK_ID}
+      --preload="/root/scripts/mine-when-need.js"
       --mine
       --miner.etherbase ${SINGER_ADDRESS}
       --unlock ${SINGER_ADDRESS} --password password.txt
       
 volumes:
   bootnode-vol:
-  peer-node-vol:
+  json-rpc-vol:
   miner-vol:
