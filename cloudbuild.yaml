@@ -8,8 +8,7 @@ steps:
         "gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "-t",
         "gcr.io/$PROJECT_ID/mein-geth:latest",
-        "--build-arg",
-        "ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}",
+        "--build-arg=ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}",
         "./mein-geth",
       ]
   # Push the container image to Container Registry
@@ -25,12 +24,9 @@ steps:
         "gcr.io/$PROJECT_ID/bootnode:$COMMIT_SHA",
         "-t",
         "gcr.io/$PROJECT_ID/bootnode:latest",
-        "--build-arg",
-        "NODEKEY=${_NODEKEY}",
-        "--build-arg",
-        "NETWORK_ID=${_NETWORK_ID}",
-        "--build-arg",
-        "NETWORK_PORT=${_NETWORK_PORT}",
+        "--build-arg=NODEKEY=${_NODEKEY}",
+        "--build-arg=NETWORK_ID=${_NETWORK_ID}",
+        "--build-arg=NETWORK_PORT=${_NETWORK_PORT}",
         "./bootnode",
       ]
   # Push the container image to Container Registry
