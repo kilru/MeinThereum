@@ -33,7 +33,7 @@ services:
       args:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
     command:
-      --bootnodes="enode://${ENODE}@bootnode:${NETWORK_PORT}"
+      --bootnodes="enode://${ENODE}@${BOOTNODE_IP}:${NETWORK_PORT}"
       --allow-insecure-unlock
       --http
       --http.addr="0.0.0.0"
@@ -63,7 +63,7 @@ services:
     depends_on:
       - bootnode
     command:
-      --bootnodes="enode://${ENODE}@bootnode:${NETWORK_PORT}"
+      --bootnodes="enode://${ENODE}@${BOOTNODE_IP}:${NETWORK_PORT}"
       --networkid=${NETWORK_ID}
       --preload="/root/scripts/mine-when-need.js"
       --mine
