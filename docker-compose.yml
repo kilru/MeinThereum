@@ -15,7 +15,6 @@ services:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
     command:
       --nodekeyhex=${NODEKEY}
-      --nodiscover
       --ipcdisable
       --networkid=${NETWORK_ID}
       --port=${NETWORK_PORT}
