@@ -1,7 +1,7 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA', '--build-arg', 'ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA', '--build-arg', 'ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}', './mein-geth']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA']
@@ -13,7 +13,7 @@ steps:
     '--build-arg', 'NODEKEY=${_NODEKEY}', 
     '--build-arg', 'NETWORK_ID=${_NETWORK_ID}', 
     '--build-arg', 'NETWORK_PORT=${_NETWORK_PORT}',
-    '.'
+    './bootnode'
   ]
 
 # Deploy container image to Cloud Run
