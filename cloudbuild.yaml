@@ -8,7 +8,7 @@ steps:
         "gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "-t",
         "gcr.io/$PROJECT_ID/mein-geth:latest",
-        "--build-arg ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}",
+        "--build-arg=ACCOUNT_PASSWORD=${_ACCOUNT_PASSWORD}",
         "./mein-geth",
       ]
   # Push the container image to Container Registry
