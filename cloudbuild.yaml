@@ -49,7 +49,7 @@ steps:
         "run",
         "deploy",
         "json-rpc",
-        '--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--allow-insecure-unlock,--http,--http.addr=0.0.0.0,--http.api="eth,web3,net,admin,personal",--http.corsdomain=*,--http.port=${_RPC_PORT},--graphql,--graphql.corsdomain=*',
+        "--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--allow-insecure-unlock,--http,--http.addr=0.0.0.0,--http.corsdomain=*,--http.port=${_RPC_PORT},--graphql,--graphql.corsdomain=*",
         "--port=${_RPC_PORT}",
         "--image=gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "--region=asia-northeast1",
