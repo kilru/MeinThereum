@@ -38,14 +38,16 @@ services:
       --http.addr="0.0.0.0"
       --http.api="eth,web3,net,admin,personal"
       --http.corsdomain="*"
+      --http.port=${RPC_PORT}
       --graphql
       --graphql.corsdomain="*"
       --ws
       --ws.api=eth,net,web3
+      --ws.port=${WS_PORT}
       --networkid=${NETWORK_ID}
     ports:
-      - "8545:8545"
-      - "8546:8546"
+      - "${RPC_PORT}:${RPC_PORT}"
+      - "${WS_PORT}:${WS_PORT}"
 
   miner:
     container_name: miner

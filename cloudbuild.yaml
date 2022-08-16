@@ -37,6 +37,7 @@ steps:
         "deploy",
         "miner",
         "--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--preload=/root/scripts/mine-when-need.js,--mine,--miner.etherbase ${_SINGER_ADDRESS},--unlock ${_SINGER_ADDRESS} --password password.txt",
+        "--port=8551",
         "--image=gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "--region=asia-northeast1",
       ]
@@ -48,7 +49,8 @@ steps:
         "run",
         "deploy",
         "json-rpc",
-        "--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--allow-insecure-unlock,--http,--http.addr=0.0.0.0,--http.api=\"eth,web3,net,admin,personal\",--http.corsdomain=\"*\",--graphql,--graphql.corsdomain=\"*\",--ws, --ws.api=eth,net,web3",
+        "--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--allow-insecure-unlock,--http,--http.addr=0.0.0.0,--http.api=\"eth,web3,net,admin,personal\",--http.corsdomain=\"*\",--http.port=${_RPC_PORT},--graphql,--graphql.corsdomain=\"*\"",
+        "--port=${_RPC_PORT}",
         "--image=gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "--region=asia-northeast1",
       ]
