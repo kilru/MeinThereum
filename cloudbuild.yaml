@@ -36,7 +36,7 @@ steps:
         "run",
         "deploy",
         "miner",
-        '--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--port=${_NETWORK_PORT},--preload=/root/scripts/mine-when-need.js,--mine,--miner.etherbase=${_SINGER_ADDRESS},--unlock=${_SINGER_ADDRESS}, --password=password.txt',
+        '--args=--bootnodes=enode://${_ENODE}@${_BOOTNODE_IP}:${_NETWORK_PORT},--networkid=${_NETWORK_ID},--port=${_NETWORK_PORT},--preload=/root/scripts/mine-when-need.js,--mine,--miner.etherbase=${_SINGER_ADDRESS},--unlock=${_SINGER_ADDRESS},--password=password.txt',
         "--port=${_NETWORK_PORT}",
         "--image=gcr.io/$PROJECT_ID/mein-geth:$COMMIT_SHA",
         "--region=asia-northeast1",
